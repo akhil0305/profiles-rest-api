@@ -16,3 +16,5 @@ class HelloApiView(APIView):
         ]
 
         return Response({'message':'Hello!', 'an_apiview':an_apiview})     #Converts given list or dictionary to json file and then returns as response object
+
+    

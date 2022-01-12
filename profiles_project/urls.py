@@ -18,5 +18,5 @@ from django.urls import path, include               #include is a function used 
 
 urlpatterns = [
     path('admin/', admin.site.urls),                                #links the admin url to admin app, created by default
-    path('api/', include('profiles_api.urls'))
+    path('api/', include('profiles_api.urls'))                      #include the urls from profiles_api app
 ]
