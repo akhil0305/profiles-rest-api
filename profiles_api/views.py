@@ -1,6 +1,7 @@
 from rest_framework.views import APIView            #rest_framework = Django Rest Framework
 from rest_framework.response import Response
 from rest_framework import status       #They are a list of HTTP status codes that i Can use to return responses
+from rest_framework import viewsets
 
 from profiles_api import serializers
 
@@ -49,3 +50,18 @@ class HelloApiView(APIView):
         """Delete an Object"""
 
         return Response({'method':'DELETE'})
+
+class HelloViewSet(viewsets.ViewSet):
+    """Test API Viewset"""
+    """In Viewsets we add functions, to perform actions in a typical API"""
+
+    def list(self, request):            #similar to HTTP get
+        """Return a Hello message"""
+
+        a_viewset = [
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automatically maps URLs using Routers',
+            'Provides more functionality using less code',
+        ]
+
+        return Response({'message':'Hello!', 'a_viewset':a_viewset})
