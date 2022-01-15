@@ -33,7 +33,7 @@ class HelloApiView(APIView):
             return Response({'message':message})
         else:               #by default Response() returns a HTTP 200 Okay status
             return Response( serializer.errors,      #serializer.error gives all the errors that were validated based on the conditions you gave
-                status = status.HTT_400_BAD_REQUEST     #you can also pass integer 400
+                status = status.HTTP_400_BAD_REQUEST     #you can also pass integer 400
             )
 
     def put(self, request, pk=None):        #pk - is the id of the object to be updated with the put request. put - is removing existing object and updating it with new object provided
@@ -55,6 +55,8 @@ class HelloViewSet(viewsets.ViewSet):
     """Test API Viewset"""
     """In Viewsets we add functions, to perform actions in a typical API"""
 
+    serializer_class = serializers.HelloSerializer
+
     def list(self, request):            #similar to HTTP get
         """Return a Hello message"""
 
@@ -65,3 +67,37 @@ class HelloViewSet(viewsets.ViewSet):
         ]
 
         return Response({'message':'Hello!', 'a_viewset':a_viewset})
+
+    def create(self, request):
+        """Create a new Hello message"""
+
+        serializer = self.serializer_class(data = request.data)
+
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            message = f'Hello {name}'
+            return Response({'meassage' : message})
+        else:
+            return Response(serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    def retrieve(self, request, pk=None):
+        """Handle getting object by its ID"""
+
+        return Response({'http method':'GET'})
+
+    def update(self, request, pk=None):
+        """Handle updating an object"""
+
+        return Response({'http method':'PUT'})
+
+    def partial_update(self, request, pk=None):
+        """Handle updating part of an object"""
+
+        return Response({'http method':'PATCH'})
+
+    def destroy(self, request, pk=None):
+        """Handle removing an object"""
+
+        return Request({'http method':'DELETE'})
